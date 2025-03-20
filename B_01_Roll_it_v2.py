@@ -1,8 +1,5 @@
 import random
 
-from C_04_One_Round_v1 import double_user, user_points
-from C_05_Statement_Generator import make_statement
-
 
 def yes_no(question):
     """Checks user response to a question is yes / no (y/n), returns 'yes' or 'no' """
@@ -38,7 +35,7 @@ def int_check():
         try:
             response = int(input("what is the game goal? "))
 
-            if game_goal < 13:
+            if response < 13:
                 print(error)
             else:
 
@@ -65,13 +62,15 @@ def initial_points(which_player):
 
     return total, double
 
+
 def make_statement(statement, decoration):
-#   """Adds emoji / additional characters
+    """Adds emoji / additional characters"""
 
     ends = decoration * 3
     print(f"\n{ends} {statement} {ends}")
 
 # Main starts here...
+
 
 # At the start of the game, the computer / user score are both zero
 comp_score = 0
@@ -87,7 +86,7 @@ want_instructions = yes_no(" do you want to see the instructions? ")
 
 # display the instruction if the user wants to see them
 if want_instructions == "yes":
-        instructions()
+    instructions()
 
 print()
 game_goal = int_check()
@@ -104,10 +103,6 @@ while comp_score < game_goal and user_score < game_goal:
     initial_user = initial_points("User")
     initial_comp = initial_points("Comp")
 
-    print("Initial User", initial_user)
-
-    print("initial Computer", initial_comp)
-
     # Retrieve user points (first item from function)
     user_points = initial_user[0]
     comp_points = initial_comp[0]
@@ -119,25 +114,23 @@ while comp_score < game_goal and user_score < game_goal:
     #      print(" Good news! - if you win this round, you will earn Double points")
 
     # assume user goes first...
-    First = "User"
+    first = "User"
     second = "Computer"
     player_1_points = user_points
     player_2_points = comp_points
 
     # if user has fewer points, they start the game
-    if user_points == comp_points:
+    if user_points < comp_points:
         print("you start because your initial roll was less than the computer\n")
 
     # if user and computer roll = points, the user is player 1...
     elif user_points == comp_points:
-        print("the initial rolls were the same, the"
-              ""
-              " user starts!")
+        print("the initial rolls were the same, the user starts!")
 
     # if the computer has fewer points, switch the computer to 'player 1 else:
     else:
         player_1_points, player_2_points = player_2_points, player_1_points
-        first, second = second, "first"
+        first, second = second, first
 
     # Loop until we have a winner...
     while player_1_points < 13 and player_2_points < 13:
@@ -158,9 +151,7 @@ while comp_score < game_goal and user_score < game_goal:
         player_2_roll = random.randint(1, 6)
         player_2_points += player_2_roll
 
-        print("{second): Rolled a (player_2_roll) has player 2_points) points")
-
-        print("{first): (player_1_points) (second) (player_2_points)")
+        print(F"{second}: Rolled a {player_2_roll} has {player_2_points} points")
 
     print("end Of Round")
 
